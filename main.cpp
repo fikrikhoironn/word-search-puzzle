@@ -4,7 +4,6 @@
 #include <vector>
 #include <stdio.h>
 #include <time.h>
-#include <fstream>
 
 using namespace std;
 
@@ -38,8 +37,8 @@ void printPuzzle(){
 //fungsi untuk mencari kata yang dicari
 bool searchWord(vector<vector<char> > puzzle, int row, int col, string line, int NRow, int Ncol){
     // apabila huruf pertama yang dicek pada puzzle tidak cocok dengan huruf pertama masukan, maka return false
+    perbandingan++;
     if (puzzle[row][col] != line[0]){
-        perbandingan++;
         return false;
     }
     int len = line.length();
@@ -49,6 +48,7 @@ bool searchWord(vector<vector<char> > puzzle, int row, int col, string line, int
         int colArrow = col + arahX[arah];
 
         for (k = 1; k < len; k++){
+            perbandingan++;
             // apabila keluar dari batas row dan column, maka break
             if (rowArrow >= NRow || rowArrow < 0 || colArrow >= NCol || colArrow < 0){
                 break;
@@ -57,7 +57,6 @@ bool searchWord(vector<vector<char> > puzzle, int row, int col, string line, int
             if (puzzle[rowArrow][colArrow] != line[k]){
                 break;
             }
-            perbandingan++;
             // lakukan penggeseran huruf sesuai dengan arah
             rowArrow += arahY[arah];
             colArrow += arahX[arah];
@@ -96,7 +95,11 @@ bool searchWord(vector<vector<char> > puzzle, int row, int col, string line, int
 int main(){
     string line;
     // melakukan pembacaan file
-    ifstream myfile ("test4.txt");
+    string filename;
+    string directory = "./test_case/";
+    cout << "masukkan nama file: ";
+    cin >> filename;
+    ifstream myfile (directory+filename);
     clock_t start;
     if (myfile.is_open()){
         // melakukan pembacaan setiap baris masukan
@@ -132,13 +135,13 @@ int main(){
 
         }
         cout << "Total perbandingan huruf yang dilakukan " << perbandingan << " kali"<< endl;
-        printPuzzle();
         clock_t end = clock();
         double elapsed = double(end - start)/CLOCKS_PER_SEC;
-        cout << "Time measured: "<< elapsed*(0.000001) << " microseconds" << endl;
+        cout << "Time measured: "<< elapsed/(0.000001) << " microseconds" << endl;
+        printPuzzle();
         myfile.close();
     }
-    else cout << "Unable to open test file";
+    else cout << "Terjadi kesalahan saat membuka file, mungkin salah nama file.";
 
     return 0;
 }
