@@ -49,7 +49,7 @@ bool searchWord(vector<vector<char> > puzzle, int row, int col, string line, int
 
         for (k = 1; k < len; k++){
             perbandingan++;
-            // apabila keluar dari batas row dan column, maka break
+            // apabila keluar dari batas row atau column, maka break
             if (rowArrow >= NRow || rowArrow < 0 || colArrow >= NCol || colArrow < 0){
                 break;
             }
@@ -96,7 +96,7 @@ int main(){
     string line;
     // melakukan pembacaan file
     string filename;
-    string directory = "./test_case/";
+    string directory = "../test/";
     cout << "masukkan nama file: ";
     cin >> filename;
     ifstream myfile (directory+filename);
@@ -138,7 +138,7 @@ int main(){
         clock_t end = clock();
         double elapsed = double(end - start)/CLOCKS_PER_SEC;
         cout << "Time measured: "<< elapsed/(0.000001) << " microseconds" << endl;
-        printPuzzle();
+        
         myfile.close();
     }
     else cout << "Terjadi kesalahan saat membuka file, mungkin salah nama file.";
